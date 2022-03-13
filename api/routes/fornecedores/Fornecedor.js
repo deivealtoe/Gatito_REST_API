@@ -21,6 +21,15 @@ class Fornecedor {
     this.createdAt = resultado.createdAt
     this.updatedAt = resultado.updatedAt
   }
+
+  async carregar() {
+    const encontrado = await TabelaFornecedor.pegarPorId(this.id)
+    this.nome = encontrado.nome
+    this.email = encontrado.email
+    this.categoria = encontrado.categoria
+    this.createdAt = encontrado.createdAt
+    this.updatedAt = encontrado.updatedAt
+  }
 }
 
 module.exports = Fornecedor
