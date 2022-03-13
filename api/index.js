@@ -9,4 +9,4 @@ server.use('/api/fornecedores', router)
 
 const host = config.get('api.host')
 const port = config.get('api.port')
-server.listen(port, host, () => console.log(`Server started at ${host}:${port}`))
+server.listen(port, host, () => console.log(`Server started at http://${host}:${port}`))

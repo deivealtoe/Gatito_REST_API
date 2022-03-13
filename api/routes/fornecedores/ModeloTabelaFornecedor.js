@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const sequelizeInstance = require('../../banco_de_dados/index')
 
 const columns = {
-  company: {
+  nome: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -10,7 +10,7 @@ const columns = {
     type: Sequelize.STRING,
     allowNull: false
   },
-  category: {
+  categoria: {
     type: Sequelize.ENUM('Ração', 'Brinquedo'),
     allowNull: false
   }
