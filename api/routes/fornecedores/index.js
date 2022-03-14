@@ -25,7 +25,34 @@ router.get('/:idFornecedor', async (request, response) => {
       mensagem: err.message
     }))
   }
-  
 })
+
+router.put('/:idFornecedor', async (request, response) => {
+  try {
+    const idFornecedor = request.params.idFornecedor
+    const dadosRecebidos = request.body
+    const dados = Object.assign({}, dadosRecebidos, { id: idFornecedor })
+    const fornecedor = new Fornecedor(dados)
+    await fornecedor.atualizar()
+    response.end()
+  } catch(err) {
+    response.send(JSON.stringify({
+      mensagem: err.message
+    }))
+  }
+})
+
+// router.delete('/:idFornecedor', async (request, response) => {
+//   try {
+//     const idFornecedor = request.params.idFornecedor
+//     const fornecedor = new Fornecedor({ id: idFornecedor })
+//     await fornecedor.carregar()
+
+//   } catch (err) {
+//     response.send(JSON.stringify({
+//       mensagem: err.message
+//     }))
+//   }
+// })
 
 module.exports = router
