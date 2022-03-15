@@ -51,9 +51,9 @@ class Fornecedor {
     await TabelaFornecedor.atualizar(this.id, dadosParaAtualizar)
   }
 
-  // remover() {
-  //   return TabelaFornecedor.remover(this.id)
-  // }
+  remover() {
+    return TabelaFornecedor.remover(this.id)
+  }
 }
 
 module.exports = Fornecedor
