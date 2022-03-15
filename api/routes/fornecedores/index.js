@@ -47,7 +47,8 @@ router.delete('/:idFornecedor', async (request, response) => {
     const idFornecedor = request.params.idFornecedor
     const fornecedor = new Fornecedor({ id: idFornecedor })
     await fornecedor.carregar()
-
+    await fornecedor.remover()
+    response.end()
   } catch (err) {
     response.send(JSON.stringify({
       mensagem: err.message
