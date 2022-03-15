@@ -8,10 +8,16 @@ router.get('/', async (request, response) => {
 })
 
 router.post('/', async (request, response) => {
-  const dadosRecebidos = request.body
-  const fornecedor = new Fornecedor(dadosRecebidos)
-  await fornecedor.criar()
-  response.send(JSON.stringify(fornecedor))
+  try {
+    const dadosRecebidos = request.body
+    const fornecedor = new Fornecedor(dadosRecebidos)
+    await fornecedor.criar()
+    response.send(JSON.stringify(fornecedor))
+  } catch(err) {
+    response.send(JSON.stringify({
+      mensagem: err.message
+    }))
+  }
 })
 
 router.get('/:idFornecedor', async (request, response) => {
