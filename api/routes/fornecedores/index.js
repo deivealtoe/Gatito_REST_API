@@ -16,7 +16,7 @@ router.post('/', async (request, response) => {
     response.status(201)
     response.send(JSON.stringify(fornecedor))
   } catch(err) {
-    response.status(500)
+    response.status(400)
     response.send(JSON.stringify({
       mensagem: err.message
     }))
@@ -31,7 +31,7 @@ router.get('/:idFornecedor', async (request, response) => {
     response.status(200)
     response.send(JSON.stringify(fornecedor))
   } catch (err) {
-    response.status(500)
+    response.status(404)
     response.send(JSON.stringify({
       mensagem: err.message
     }))
@@ -48,7 +48,7 @@ router.put('/:idFornecedor', async (request, response) => {
     response.status(204)
     response.end()
   } catch(err) {
-    response.status(500)
+    response.status(400)
     response.send(JSON.stringify({
       mensagem: err.message
     }))
@@ -64,7 +64,7 @@ router.delete('/:idFornecedor', async (request, response) => {
     response.status(204)
     response.end()
   } catch (err) {
-    response.status(500)
+    response.status(404)
     response.send(JSON.stringify({
       mensagem: err.message
     }))
