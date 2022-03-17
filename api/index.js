@@ -2,6 +2,7 @@ const config = require('config')
 const express = require('express')
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
+const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos')
 
 const server = express()
 server.use(express.json())
@@ -9,14 +10,14 @@ server.use(express.json())
 const router = require('./routes/fornecedores/index')
 server.use('/api/fornecedores', router)
 
-server.use((err, request, response) => {
+server.use((err, request, response, next) => {
   let status = 500
 
-  if (err instanceof(NaoEncontrado)) {
+  if (err instanceof NaoEncontrado ) {
     status = 404
   }
   
-  if (err instanceof(CampoInvalido)) {
+  if (err instanceof CampoInvalido || err instanceof DadosNaoFornecidos) {
     status = 400
   }
 

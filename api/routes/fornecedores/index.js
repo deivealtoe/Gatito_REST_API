@@ -46,7 +46,7 @@ router.put('/:idFornecedor', async (request, response, next) => {
   }
 })
 
-router.delete('/:idFornecedor', async (request, response) => {
+router.delete('/:idFornecedor', async (request, response, next) => {
   try {
     const idFornecedor = request.params.idFornecedor
     const fornecedor = new Fornecedor({ id: idFornecedor })
@@ -55,10 +55,7 @@ router.delete('/:idFornecedor', async (request, response) => {
     response.status(204)
     response.end()
   } catch (err) {
-    response.status(404)
-    response.send(JSON.stringify({
-      mensagem: err.message
-    }))
+    next(err)
   }
 })
 
