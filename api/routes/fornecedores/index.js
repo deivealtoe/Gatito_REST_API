@@ -8,7 +8,7 @@ router.get('/', async (request, response) => {
   response.send(JSON.stringify(resultados))
 })
 
-router.post('/', async (request, response) => {
+router.post('/', async (request, response, next) => {
   try {
     const dadosRecebidos = request.body
     const fornecedor = new Fornecedor(dadosRecebidos)
@@ -16,14 +16,11 @@ router.post('/', async (request, response) => {
     response.status(201)
     response.send(JSON.stringify(fornecedor))
   } catch(err) {
-    response.status(400)
-    response.send(JSON.stringify({
-      mensagem: err.message
-    }))
+    next(err)
   }
 })
 
-router.get('/:idFornecedor', async (request, response) => {
+router.get('/:idFornecedor', async (request, response, next) => {
   try {
     const idFornecedor = request.params.idFornecedor
     const fornecedor = new Fornecedor({ id: idFornecedor })
@@ -31,14 +28,11 @@ router.get('/:idFornecedor', async (request, response) => {
     response.status(200)
     response.send(JSON.stringify(fornecedor))
   } catch (err) {
-    response.status(404)
-    response.send(JSON.stringify({
-      mensagem: err.message
-    }))
+    next(err)
   }
 })
 
-router.put('/:idFornecedor', async (request, response) => {
+router.put('/:idFornecedor', async (request, response, next) => {
   try {
     const idFornecedor = request.params.idFornecedor
     const dadosRecebidos = request.body
@@ -48,10 +42,7 @@ router.put('/:idFornecedor', async (request, response) => {
     response.status(204)
     response.end()
   } catch(err) {
-    response.status(400)
-    response.send(JSON.stringify({
-      mensagem: err.message
-    }))
+    next(err)
   }
 })
 
