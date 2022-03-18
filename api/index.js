@@ -3,6 +3,7 @@ const express = require('express')
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos')
+const ValorNaoSuportado = require('./erros/ValorNaoSuportado')
 
 const server = express()
 server.use(express.json())
@@ -19,6 +20,10 @@ server.use((err, request, response, next) => {
   
   if (err instanceof CampoInvalido || err instanceof DadosNaoFornecidos) {
     status = 400
+  }
+
+  if (err instanceof ValorNaoSuportado) {
+    status = 406
   }
 
   response.status(status)
