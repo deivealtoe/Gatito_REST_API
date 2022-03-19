@@ -4,6 +4,16 @@
 
 ---
 
+## Fazendo esse curso eu aprendi:
+
+- Criar uma aplicação do zero seguindo a convenção REST
+- Arquitetar APIs escaláveis
+- Entendi como requisições HTTP funcionam
+- Conheci os componentes de uma requisição como cabeçalhos e status
+- Como melhorar a comunicação entre aplicações
+
+---
+
 ## Ações do Frontend
 
 ![Ações que o Frontend pode tomar - Endpoints](./recursos_do_curso/acoes.png "Ações que o Frontend pode tomar - Endpoints")
