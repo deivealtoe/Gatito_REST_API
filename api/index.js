@@ -4,9 +4,27 @@ const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos')
 const ValorNaoSuportado = require('./erros/ValorNaoSuportado')
+const formatosAceitos = require('./Serializador').formatosAceitos
 
 const server = express()
 server.use(express.json())
+
+server.use((request, response, next) => {
+  let formatoRequisitado = request.header('Accept')
+
+  if (formatoRequisitado === '*/*') {
+    formatoRequisitado = 'application/json'
+  }
+
+  if (formatosAceitos.indexOf(formatoRequisitado) === -1) {
+    response.status(406)
+    
+    return response.end()
+  }
+
+  response.setHeader('Content-Type', formatoRequisitado)
+  next()
+})
 
 const router = require('./routes/fornecedores/index')
 server.use('/api/fornecedores', router)
