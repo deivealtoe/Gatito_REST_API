@@ -1,10 +1,12 @@
 const config = require('config')
 const express = require('express')
+const rotaFornecedores = require('./routes/fornecedores/index')
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos')
 const ValorNaoSuportado = require('./erros/ValorNaoSuportado')
 const formatosAceitos = require('./Serializador').formatosAceitos
+const SerializadorErro = require('./Serializador').SerializadorErro
 
 const server = express()
 server.use(express.json())
@@ -26,8 +28,7 @@ server.use((request, response, next) => {
   next()
 })
 
-const router = require('./routes/fornecedores/index')
-server.use('/api/fornecedores', router)
+server.use('/api/fornecedores', rotaFornecedores)
 
 server.use((err, request, response, next) => {
   let status = 500
@@ -44,8 +45,9 @@ server.use((err, request, response, next) => {
     status = 406
   }
 
+  const serializadorErro = new SerializadorErro(response.getHeader('Content-Type'))
   response.status(status)
-  response.send(JSON.stringify({
+  response.send(serializadorErro.serializar({
     mensagem: err.message,
     id: err.idErro
   }))

@@ -29,7 +29,7 @@ router.get('/:idFornecedor', async (request, response, next) => {
     const fornecedor = new Fornecedor({ id: idFornecedor })
     await fornecedor.carregar()
     response.status(200)
-    const serializador = new SerializadorFornecedor(response.getHeader('Content-Type'))
+    const serializador = new SerializadorFornecedor(response.getHeader('Content-Type'), ['email', 'createdAt', 'updatedAt'])
     response.send(serializador.serializar(fornecedor))
   } catch (err) {
     next(err)
