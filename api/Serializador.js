@@ -1,13 +1,35 @@
 const ValorNaoSuportado = require('./erros/ValorNaoSuportado')
+const jsontoxml = require('jsontoxml')
 
 class Serializador {
   getJson(dados) {
     return JSON.stringify(dados)
   }
 
+  getXml(dados) {
+    let tag = this.tagSingular
+
+    if (Array.isArray(dados)) {
+      tag = this.tagPlural
+      dados = dados.map((elemento) => {
+        return {
+          [this.tagSingular]: elemento
+        }
+      })
+    }
+
+    return jsontoxml({ [tag]: dados })
+  }
+
   serializar(dados) {
+    dados = this.filtrar(dados)
+
     if (this.contentType === 'application/json') {
-      return this.getJson(this.filtrar(dados))
+      return this.getJson(dados)
+    }
+
+    if (this.contentType === 'application/xml') {
+      return this.getXml(dados)
     }
 
     throw new ValorNaoSuportado(this.contentType)
@@ -41,6 +63,8 @@ class Serializador {
 class SerializadorFornecedor extends Serializador {
   constructor(contentType, camposExtras) {
     super()
+    this.tagSingular = 'fornecedor'
+    this.tagPlural = 'fornecedores'
     this.contentType = contentType
     this.camposPublicos = ['id', 'nome', 'categoria'].concat(camposExtras || [])
   }
@@ -49,6 +73,8 @@ class SerializadorFornecedor extends Serializador {
 class SerializadorErro extends Serializador {
   constructor(contentType, camposExtras) {
     super()
+    this.tagSingular = 'erro'
+    this.tagPlural = 'erros'
     this.contentType = contentType
     this.camposPublicos = ['id', 'mensagem'].concat(camposExtras || [])
   }
@@ -58,5 +84,5 @@ module.exports = {
   Serializador: Serializador,
   SerializadorFornecedor: SerializadorFornecedor,
   SerializadorErro: SerializadorErro,
-  formatosAceitos: ['application/json']
+  formatosAceitos: ['application/json', 'application/xml']
 }
